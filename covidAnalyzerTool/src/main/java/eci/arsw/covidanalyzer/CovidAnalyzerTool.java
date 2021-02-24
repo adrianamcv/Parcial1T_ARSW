@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 /**
  * A Camel Application
@@ -46,6 +47,7 @@ public class CovidAnalyzerTool {
                 fin=amountOfFilesTotal;
             }
             CovidAnalyzerThread thread = new CovidAnalyzerThread(resultFiles.subList(ini,fin));
+            System.out.println("Nuevo thread");
             ini = fin;
             fin = fin + totalT;
             thread.start();
@@ -87,13 +89,16 @@ public class CovidAnalyzerTool {
         while (true) {
             Scanner scanner = new Scanner(System.in);
             String line = scanner.nextLine();
-            if (line.contains("exit")){
-                System.exit(0);
-            if(line.isEmpty()){
-            }if(pause=false){
-                pause=true;}
-            if(pause=true){
-                pause=false;}
+            if (line.contains("exit")) {
+                break;
+            }else if(line.isEmpty()) {
+                if (pause == false) {
+                    pause = true;
+                }
+                if (pause == true) {
+                    pause = false;
+                }
+            }
 
             for (CovidAnalyzerThread t : threads) {
                     t.continuar();
@@ -105,5 +110,5 @@ public class CovidAnalyzerTool {
             System.out.println(message);
         }
     }
-}}
+}
 
