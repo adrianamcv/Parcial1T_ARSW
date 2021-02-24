@@ -48,10 +48,11 @@ public class CovidAnalyzerTool {
             }
             CovidAnalyzerThread thread = new CovidAnalyzerThread(resultFiles.subList(ini,fin));
             System.out.println("Nuevo thread");
-            ini = fin;
-            fin = fin + totalT;
             thread.start();
             threads.add(thread);
+            ini = fin;
+            fin = fin + totalT;
+
         }
 
         for (File resultFile : resultFiles) {
@@ -101,8 +102,9 @@ public class CovidAnalyzerTool {
             }
 
             for (CovidAnalyzerThread t : threads) {
-                    t.continuar();
+                    t.notificar();
             }
+
             String message = "Processed %d out of %d files.\nFound %d positive people:\n%s";
             Set<Result> positivePeople = covidAnalyzerTool.getPositivePeople();
             String affectedPeople = positivePeople.stream().map(Result::toString).reduce("", (s1, s2) -> s1 + "\n" + s2);

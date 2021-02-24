@@ -1,0 +1,3 @@
+https://github.com/adrianamcv/Parcial1T_ARSW.git
+
+https://arsw-bono.herokuapp.com/covid/result

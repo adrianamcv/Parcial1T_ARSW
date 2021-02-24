@@ -34,7 +34,7 @@ import java.util.List;
             }
         }
 
-        public synchronized void continuar(){
+        public synchronized void notificar(){
             CovidAnalyzerTool.monitor.notifyAll();
         }
 }
