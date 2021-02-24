@@ -6,6 +6,7 @@ import java.util.List;
     public class CovidAnalyzerThread extends Thread{
         private TestReader testReader;
         private List<File> reports;
+        private boolean pause;
 
         public CovidAnalyzerThread(List<File> rep) {
             reports = rep;
@@ -33,9 +34,16 @@ import java.util.List;
                 CovidAnalyzerTool.amountOfFilesProcessed.incrementAndGet();
             }
         }
-
-        public synchronized void notificar(){
-            CovidAnalyzerTool.monitor.notifyAll();
+        public void pause(){
+            pause = true;
         }
+        
+        public synchronized void notificar(){
+            pause = false;
+            synchronized(this){
+                CovidAnalyzerTool.monitor.notifyAll();
+            }
+        }
+
 }
 
